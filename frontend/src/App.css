@@ -1,0 +1,256 @@
+/* Basic Reset & Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --background-color: #E3DFF3;
+  --form-background: #FFFCF5;
+  --primary-text: #1E1E1E;
+  --secondary-text: #6C757D;
+  --primary-button: #1E1E1E;
+  --primary-button-text: #FFFFFF;
+  --secondary-button: #F1F3F5;
+  --secondary-button-text: #1E1E1E;
+  --border-color: #DEE2E6;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Main Container Layout */
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.animation-container {
+  flex: 1;
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  /* UPDATED: Vertically center the characters */
+  align-items: center; 
+  position: relative;
+  overflow: hidden;
+}
+
+.form-container {
+  flex: 1;
+  background-color: var(--form-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* --- CHARACTER STYLES --- */
+.characters-wrapper {
+  position: relative;
+  width: 450px;
+  height: 300px;
+}
+
+.character {
+  position: absolute;
+  bottom: 0; /* Anchor characters to the bottom of the wrapper */
+}
+
+.character.orange {
+  left: 0px;
+  z-index: 4;
+}
+
+.character.purple {
+  left: 90px;
+  z-index: 3;
+}
+
+.character.yellow {
+  left: 280px;
+  z-index: 2;
+}
+
+.character.black {
+  left: 170px;
+  z-index: 1;
+}
+
+/* Login Form Styling */
+.login-form {
+  max-width: 400px;
+  width: 100%;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-logo,
+.screen-aware-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 50px;
+  display: block;
+  /* explicit border: width + style + color required for border to appear */
+  border: 3.5px solid #F6CACA;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+.form-header p {
+  color: var(--secondary-text);
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-text);
+  box-shadow: 0 0 0 2px rgba(30, 30, 30, 0.1);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--secondary-text);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+a.forgot-password {
+  color: var(--primary-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+a.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-login {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+  margin-bottom: 1rem;
+}
+
+.btn-login:hover {
+  background-color: #aacc6f;
+  color: black;
+}
+
+.btn-google {
+  background-color: #C6F0F3 ;
+  color: #000000;   
+  border: 1px solid var(--border-color);
+}
+
+.btn-google:hover {
+  background-color: #DFF7F0;
+}
+
+.google-logo{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  object-fit: contain;
+}
+.signup-link {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: var(--secondary-text);
+}
+
+.signup-link a {
+  color: var(--primary-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .animation-container {
+    display: none;
+  }
+  .form-container {
+    flex: 1;
+    min-height: 100vh;
+  }
+}
