@@ -1,0 +1,105 @@
+/* Scoped styles for Signup form to avoid colliding with login styles */
+
+:root {
+  --signup-form-background:  #FFFCF5;
+  --signup-primary-text: #1E1E1E;
+  --signup-secondary-text: #6C757D;
+  --signup-border-color: #DEE2E6;
+}
+
+.signup-form {
+  max-width: 400px;
+  width: 100%;
+  background: var(--signup-form-background);
+  padding: 2rem;
+}
+
+.signup-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.signup-header h2 {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.screen-aware-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.signup-group {
+  margin-bottom: 1rem;
+}
+
+.signup-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.signup-group input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--signup-border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.signup-password-wrapper { position: relative; }
+.signup-password-toggle { position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); cursor: pointer; }
+
+.signup-btn {
+  width: 100%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.signup-btn {
+  background-color: var(--primary-button);
+  color: var(--primary-button-text);
+  margin-bottom: 1rem;
+}
+
+.signup-btn:hover {
+  background-color: #aacc6f;
+  color: black;
+}
+
+.btn-google {
+  background-color: #C6F0F3 ;
+  color: #000000;   
+  border: 1px solid var(--border-color);
+}
+
+.btn-google:hover {
+  background-color: #DFF7F0;
+}
+
+.google-logo{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  object-fit: contain;
+}
+
+.signup-link-mod { text-align: center; margin-top: 1rem; color: var(--signup-secondary-text); }
+.signup-link-mod a { color: var(--signup-primary-text); font-weight: 500; text-decoration: none; }
+
+@media (max-width: 900px) {
+  .signup-form { margin: 2rem; }
+}
