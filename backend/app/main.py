@@ -4,6 +4,7 @@ import joblib
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware  
 
 # -------------------------------
 # Paths
@@ -37,6 +38,22 @@ app = FastAPI(
     version="1.0"
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # your React URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello from FastAPI!"}
+
+@app.post("/send-data")
+def send_data(data: dict):
+    return {"received": data}
+
 # -------------------------------
 # User Input Schema
 # -------------------------------
@@ -51,9 +68,32 @@ class UserInput(BaseModel):
     entertainment_hours: float
     work_related_hours: float
 
+
 # -------------------------------
 # Endpoints
 # -------------------------------
+
+@app.post("/predict_report")
+def predict_report(user: UserInput):
+    df = pd.DataFrame([user.dict()])
+    # Risk
+    X_risk = scaler_clf.transform(df[clf_features])
+    risk_pred = clf_model.predict(X_risk)[0]
+    # Mood
+    df_mood = df.copy()
+    df_mood["screen_sleep_ratio"] = df_mood["daily_screen_time_hours"] / (df_mood["sleep_duration_hours"] + 1)
+    df_mood["stress_x_sleep"] = df_mood["stress_level"] * df_mood["sleep_quality"]
+    df_mood["activity_balance"] = df_mood["physical_activity_hours_per_week"] / (df_mood["daily_screen_time_hours"] + 1)
+    X_mood = scaler_reg.transform(df_mood[reg_features])
+    mood_pred = reg_model.predict(X_mood)[0]
+    # Cluster
+    X_cluster = scaler_cluster.transform(df[cluster_features])
+    cluster_pred = cluster_model.predict(X_cluster)[0]
+    return {
+        "risk_level": risk_pred,
+        "mood_rating": round(float(mood_pred), 2),
+        "cluster_label": int(cluster_pred)
+    }
 
 @app.post("/predict_risk")
 def predict_risk(user: UserInput):

@@ -4,10 +4,31 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import LandingPage from './components/LandingPage';
 import Dashboard from './components/Dashboard';
+import DataForm from './components/DataForm';
+import Report from './components/Report';
 import './App.css';
+import axios from "axios";
 
 function App() {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/")
+      .then(response => {
+        setMessage(response.data.message);
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const sendData = async () => {
+    const data = { name: "Chirag", role: "Frontend-Backend Connector" };
+    const response = await axios.post("http://localhost:8000/send-data", data);
+    console.log(response.data);
+  };
+
   // derive initial route from the current pathname so deep links work
   const pathToRoute = (path) => {
     if (!path) return 'landing';
@@ -56,10 +77,19 @@ function App() {
 
   return (
     <div>
+      <div>
+        {/*<h1>React + FastAPI Connection</h1>
+        <p>Message from backend: {message}</p>
+        <button onClick={sendData}>Send Data to FastAPI</button> */}
+      </div>
       {route === 'landing' ? (
         <LandingPage onNavigate={navigate} />
       ) : route === 'dashboard' ? (
         <Dashboard onNavigate={navigate} />
+      ) : route === 'dataform' ? (
+        <DataForm onNavigate={navigate} />
+      ) : route === 'report' ? (
+        <Report onNavigate={navigate} />
       ) : (
         <div className="login-container">
           <div className="animation-container">

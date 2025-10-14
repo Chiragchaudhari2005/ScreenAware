@@ -149,7 +149,7 @@ const Dashboard = ({ onNavigate }) => {
               <label htmlFor="sleep-hours">How many hours did you sleep?</label>
               <input id="sleep-hours" type="number" step="0.5" placeholder="e.g., 7.5" />
             </div>
-            <button className="btn-v2 btn-log-data">Log Data</button>
+            <button className="btn-v2 btn-log-data" onClick={() => onNavigate && onNavigate('dataform')}>Log Data</button>
           </div>
         </section>
       </main>
