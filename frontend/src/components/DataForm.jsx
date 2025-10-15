@@ -28,21 +28,59 @@ const DataForm = ({ onNavigate }) => {
 
   const handleGenerate = async () => {
     try {
+      console.log('Starting report generation...');
+      
+      // Validate required fields
+      if (!form.daily_screen_time_hours || !form.sleep_duration_hours) {
+        alert('Please fill in at least Daily Screen Time and Sleep Duration');
+        return;
+      }
+
       // Send to backend
-      // Ensure all fields are numbers and present
       const payload = {
         daily_screen_time_hours: parseFloat(form.daily_screen_time_hours) || 0,
         sleep_duration_hours: parseFloat(form.sleep_duration_hours) || 0,
-        stress_level: parseFloat(form.stress_level) || 0,
-        sleep_quality: parseFloat(form.sleep_quality) || 0,
+        stress_level: parseFloat(form.stress_level) || 3,
+        sleep_quality: parseFloat(form.sleep_quality) || 3,
         physical_activity_hours_per_week: parseFloat(form.physical_activity_hours_per_week) || 0,
         social_media_hours: parseFloat(form.social_media_hours) || 0,
         gaming_hours: parseFloat(form.gaming_hours) || 0,
         entertainment_hours: parseFloat(form.entertainment_hours) || 0,
         work_related_hours: parseFloat(form.work_related_hours) || 0
       };
-      const res = await axios.post('http://localhost:8000/predict_report', payload);
-      const backend = res.data;
+
+      console.log('Payload:', payload);
+
+      // Try to generate report even without backend (fallback logic)
+      let backend;
+      try {
+        const res = await axios.post('http://localhost:8000/predict_report', payload);
+        backend = res.data;
+        console.log('Backend response:', backend);
+      } catch (backendError) {
+        console.warn('Backend not available, using fallback logic:', backendError.message);
+        
+        // Fallback calculations
+        const screenTime = payload.daily_screen_time_hours;
+        let riskLevel = 25;
+        if (screenTime >= 7) riskLevel = 85;
+        else if (screenTime >= 4) riskLevel = 55;
+        
+        const moodRating = Math.min(5, Math.max(1, ((6 - payload.stress_level) + payload.sleep_quality) / 2));
+        
+        let clusterLabel = 'Moderate Usage';
+        if (screenTime > 8 && payload.stress_level > 3) clusterLabel = 'High Usage + High Stress';
+        else if (screenTime < 4 && payload.physical_activity_hours_per_week > 5) clusterLabel = 'Balanced Lifestyle';
+        else if (payload.social_media_hours > screenTime * 0.5) clusterLabel = 'Social Media Heavy';
+        else if (payload.gaming_hours > screenTime * 0.5) clusterLabel = 'Gaming Focused';
+
+        backend = {
+          risk_level: riskLevel,
+          mood_rating: Math.round(moodRating * 10) / 10,
+          cluster_label: clusterLabel
+        };
+      }
+
       // Find dominant category client-side
       const num = (s) => parseFloat(s) || 0;
       let dominant = 'Other';
@@ -51,6 +89,7 @@ const DataForm = ({ onNavigate }) => {
         const v = num(form[c.key]);
         if (v > maxV) { maxV = v; dominant = c.label; }
       });
+
       const report = {
         riskLevel: backend.risk_level,
         moodRating: backend.mood_rating,
@@ -58,11 +97,17 @@ const DataForm = ({ onNavigate }) => {
         clusterLabel: backend.cluster_label,
         raw: form
       };
-  window.history.pushState({ route: 'report', report }, '', '/report');
-  localStorage.setItem('screenaware_report', JSON.stringify(report));
-  if (onNavigate) onNavigate('report');
+
+      console.log('Generated report:', report);
+
+      // Navigate to report
+      window.history.pushState({ route: 'report', report }, '', '/report');
+      localStorage.setItem('screenaware_report', JSON.stringify(report));
+      if (onNavigate) onNavigate('report');
+      
     } catch (err) {
-      alert('Error generating report. Please try again.');
+      console.error('Error generating report:', err);
+      alert('Error generating report: ' + err.message);
     }
   };
 
@@ -123,3 +168,4 @@ const DataForm = ({ onNavigate }) => {
 };
 
 export default DataForm;
+

@@ -48,7 +48,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello from FastAPI!"}
+    return {"message": "ScreenAware ML Backend", "status": "running", "type": "machine-learning"}
 
 @app.post("/send-data")
 def send_data(data: dict):
@@ -89,40 +89,23 @@ def predict_report(user: UserInput):
     # Cluster
     X_cluster = scaler_cluster.transform(df[cluster_features])
     cluster_pred = cluster_model.predict(X_cluster)[0]
+    
+    # Map cluster number to meaningful label
+    cluster_labels = {
+        0: "Balanced Lifestyle",
+        1: "High Usage + High Stress", 
+        2: "Moderate Usage",
+        3: "Social Media Heavy",
+        4: "Gaming Focused"
+    }
+    
     return {
         "risk_level": risk_pred,
         "mood_rating": round(float(mood_pred), 2),
-        "cluster_label": int(cluster_pred)
+        "cluster_label": cluster_labels.get(int(cluster_pred), "Unknown Pattern")
     }
 
-@app.post("/predict_risk")
-def predict_risk(user: UserInput):
-    df = pd.DataFrame([user.dict()])
-    X = scaler_clf.transform(df[clf_features])
-    pred = clf_model.predict(X)[0]
-    return {"risk_level": pred}
-
-
-@app.post("/predict_mood")
-def predict_mood(user: UserInput):
-    df = pd.DataFrame([user.dict()])
-
-    # feature engineering
-    df["screen_sleep_ratio"] = df["daily_screen_time_hours"] / (df["sleep_duration_hours"] + 1)
-    df["stress_x_sleep"] = df["stress_level"] * df["sleep_quality"]
-    df["activity_balance"] = df["physical_activity_hours_per_week"] / (df["daily_screen_time_hours"] + 1)
-
-    X = scaler_reg.transform(df[reg_features])
-    pred = reg_model.predict(X)[0]
-    return {"mood_rating": round(float(pred), 2)}
-
-
-@app.post("/predict_cluster")
-def predict_cluster(user: UserInput):
-    df = pd.DataFrame([user.dict()])
-    X = scaler_cluster.transform(df[cluster_features])
-    pred = cluster_model.predict(X)[0]
-    return {"cluster_label": int(pred)}
+# Individual prediction endpoints removed - use /predict_report for complete analysis
 
 # -------------------------------
 # Run command:
