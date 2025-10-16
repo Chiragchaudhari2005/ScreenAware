@@ -43,8 +43,8 @@ const DataForm = ({ onNavigate }) => {
       const payload = {
         daily_screen_time_hours: parseFloat(form.daily_screen_time_hours) || 0,
         sleep_duration_hours: parseFloat(form.sleep_duration_hours) || 0,
-        stress_level: parseFloat(form.stress_level) || 0,
-        sleep_quality: parseFloat(form.sleep_quality) || 0,
+        stress_level: parseFloat(form.stress_level) || 3,
+        sleep_quality: parseFloat(form.sleep_quality) || 3,
         physical_activity_hours_per_week: parseFloat(form.physical_activity_hours_per_week) || 0,
         social_media_hours: parseFloat(form.social_media_hours) || 0,
         gaming_hours: parseFloat(form.gaming_hours) || 0,
