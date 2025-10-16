@@ -1,0 +1,146 @@
+.tips-page-root {
+  background-color: var(--ivory);
+  min-height: 100vh;
+  font-family: var(--font-family);
+  color: var(--medieval-blue);
+}
+
+.tips-container {
+  padding: 2rem 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tips-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.tips-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.tips-header p {
+  font-size: 1.1rem;
+  color: var(--light-gray);
+}
+
+/* Search and Filter Section */
+.tips-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--light-lavender);
+  border-radius: 8px;
+  font-family: var(--font-family);
+  font-size: 1rem;
+}
+
+.category-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.category-filter {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  background-color: var(--oyster-cream);
+  color: var(--medieval-blue);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-filter.active {
+  background-color: var(--medieval-blue);
+  color: var(--white);
+}
+
+/* Tips Grid */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.tip-card {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--light-lavender);
+  transition: transform 0.2s ease;
+}
+
+.tip-card:hover {
+  transform: translateY(-4px);
+}
+
+.tip-category {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  background-color: var(--oyster-cream);
+  color: var(--medieval-blue);
+}
+
+.tip-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--medieval-blue);
+}
+
+.tip-description {
+  color: var(--light-gray);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.quick-tip {
+  padding: 0.75rem;
+  background-color: var(--lemon);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--medieval-blue);
+}
+
+.quick-tip strong {
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tips-header h1 {
+    font-size: 2rem;
+  }
+  
+  .tips-controls {
+    flex-direction: column;
+  }
+  
+  .search-bar {
+    width: 100%;
+  }
+  
+  .category-filters {
+    justify-content: center;
+  }
+}

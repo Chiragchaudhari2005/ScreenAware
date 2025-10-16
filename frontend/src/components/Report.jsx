@@ -54,8 +54,7 @@ const Report = ({ onNavigate }) => {
     <div className="report-root">
       <div className="report-card">
         <div className="report-header">
-          <h2>Your Digital Wellness Report</h2>
-          <p className="muted">Results below are powered by the backend ML models.</p>
+          <h2>Digital Wellness Report</h2>
         </div>
 
         <div className="report-grid">
@@ -141,7 +140,7 @@ const Report = ({ onNavigate }) => {
 
         <div className="actions" style={{marginTop: '1.25rem'}}>
           <button className="btn-primary" onClick={()=> onNavigate && onNavigate('dashboard')}>
-            Back to Dashboard
+            Back to Home
           </button>
           <button className="btn-secondary" onClick={()=> onNavigate && onNavigate('dataform')}>
             Edit & Regenerate

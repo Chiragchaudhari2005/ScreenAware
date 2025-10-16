@@ -216,6 +216,76 @@ def predict_cluster(user: UserInput):
     return {"cluster_label": cluster_name}
 
 # -------------------------------
+# Analytics Endpoints
+# -------------------------------
+
+from datetime import datetime, timedelta
+import random
+
+def generate_mock_data(days=30):
+    """Generate mock analytics data for demo purposes"""
+    today = datetime.now()
+    data = []
+    
+    base_screen_time = 6.0  # Base daily screen time
+    base_mood = 3.5        # Base mood rating
+    
+    for i in range(days):
+        date = today - timedelta(days=i)
+        # Add some random variation
+        screen_time = max(0, base_screen_time + random.uniform(-2, 2))
+        mood = max(1, min(5, base_mood + random.uniform(-1, 1)))
+        
+        data.append({
+            "date": date.strftime("%Y-%m-%d"),
+            "screen_time": round(screen_time, 1),
+            "mood_rating": round(mood, 1),
+            "social_media": round(screen_time * random.uniform(0.2, 0.4), 1),
+            "gaming": round(screen_time * random.uniform(0.1, 0.3), 1),
+            "entertainment": round(screen_time * random.uniform(0.2, 0.4), 1),
+            "work": round(screen_time * random.uniform(0.2, 0.4), 1)
+        })
+    
+    return sorted(data, key=lambda x: x["date"])
+
+@app.get("/analytics/overview")
+def get_analytics_overview():
+    """Get overview statistics for analytics dashboard"""
+    data = generate_mock_data(30)  # Last 30 days
+    
+    # Calculate averages
+    avg_screen_time = sum(d["screen_time"] for d in data) / len(data)
+    avg_mood = sum(d["mood_rating"] for d in data) / len(data)
+    
+    # Get latest day's breakdown
+    latest = data[0]
+    
+    return {
+        "summary": {
+            "avg_daily_screen_time": round(avg_screen_time, 1),
+            "avg_mood_rating": round(avg_mood, 1),
+            "total_tracked_days": len(data)
+        },
+        "category_breakdown": {
+            "social_media": latest["social_media"],
+            "gaming": latest["gaming"],
+            "entertainment": latest["entertainment"],
+            "work": latest["work"]
+        },
+        "trends": {
+            "screen_time": data[-7:],  # Last 7 days
+            "mood_rating": data[-7:]   # Last 7 days
+        }
+    }
+
+@app.get("/analytics/detailed")
+def get_detailed_analytics():
+    """Get detailed analytics data with daily breakdowns"""
+    return {
+        "daily_data": generate_mock_data(30)  # Last 30 days of data
+    }
+
+# -------------------------------
 # Run command:
 # uvicorn backend.app.main:app --reload
 # -------------------------------

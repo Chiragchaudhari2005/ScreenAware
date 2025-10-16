@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Dashboard.css'; // We will use the new, theme-consistent CSS file below
+import './Home.css'; // use the renamed CSS file
 
 // --- YOUR ESSENTIAL IMPORTS ---
 import { signOut, onAuthStateChanged } from 'firebase/auth';
@@ -23,7 +23,7 @@ const weeklyData = [
   { name: 'Sun', screenTime: 3.5, sleep: 9 },
 ];
 
-const Dashboard = ({ onNavigate }) => {
+const Home = ({ onNavigate }) => {
   const [userName, setUserName] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -75,7 +75,7 @@ const Dashboard = ({ onNavigate }) => {
   return (
     <div className="dashboard-page-root">
       {/* ---------- A PROPER NAVIGATION BAR ---------- */}
-      <nav className="dashboard-nav">
+      {/* <nav className="dashboard-nav">
         <div className="dashboard-nav-logo">
           <img src={screenLogo} alt="ScreenAware Logo" />
           <span>ScreenAware</span>
@@ -83,7 +83,7 @@ const Dashboard = ({ onNavigate }) => {
         <button className="btn-v2 btn-logout" onClick={handleLogout}>
           Sign Out
         </button>
-      </nav>
+      </nav> */}
 
       {/* ---------- MAIN DASHBOARD CONTENT ---------- */}
       <main className="dashboard-container">
@@ -157,4 +157,4 @@ const Dashboard = ({ onNavigate }) => {
   );
 };
 
-export default Dashboard;
+export default Home;
