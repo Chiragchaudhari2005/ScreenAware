@@ -54,6 +54,12 @@ const Navigation = ({ currentRoute, onNavigate, onLogout }) => {
         >
           Analytics
         </a>
+        <a 
+          className={`nav-link ${currentRoute === 'games' ? 'active' : ''}`}
+          onClick={() => handleNavigate('games')}
+        >
+          Games
+        </a> 
       </div>
 
       <div className="nav-actions">

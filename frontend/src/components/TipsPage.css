@@ -1,52 +1,88 @@
+/* ------------------ Global Styles & Full Color Palette ------------------ */
+:root {
+  --ivory: #FFFCF5;
+  --coral: #F6CACA;
+  --oyster-cream: #F5E6CC;
+  --diff-green: #B7C4A1;
+  --coffee: #ecdccb;
+  --mint-green: #DFF7F0;
+  --lemon: #FFF9D9;
+  --medieval-blue: #2E3A59;
+  --light-gray: #7A7A7A;
+  --lavender: #E3DFF3;
+  --light-lavender: #F5F0FA;
+  --light-blue: #C6F0F3;
+  --white: #FFFFFF;
+
+  /* Font */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* --- ANIMATION --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- BASE STYLES --- */
 .tips-page-root {
-  background-color: var(--ivory);
+  background-color: #C6F0F3;
   min-height: 100vh;
-  font-family: var(--font-family);
-  color: var(--medieval-blue);
+  font-family: var(--font-sans);
+  color: var(--coffee);
 }
 
 .tips-container {
-  padding: 2rem 5%;
-  max-width: 1200px;
+  padding: 3rem 2rem;
+  max-width: 1200px; /* Increased max-width for grid */
   margin: 0 auto;
 }
 
+/* --- HEADER --- */
 .tips-header {
-  margin-bottom: 2rem;
-  text-align: center;
+  margin-bottom: 3rem;
+  text-align: left;
 }
 
 .tips-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--medieval-blue);
   margin-bottom: 0.5rem;
+  margin-top: 0%;
 }
 
 .tips-header p {
-  font-size: 1.1rem;
-  color: var(--light-gray);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--medieval-blue);
 }
 
-/* Search and Filter Section */
+/* --- CONTROLS: SEARCH & FILTER --- */
 .tips-controls {
+  margin-bottom: 3rem;
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.search-bar {
-  flex: 1;
-  min-width: 200px;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--light-lavender);
+  width: 97%;
+  padding: 12px 20px;
+  border: 1px solid var(--border-color);
+  background-color: var(--white);
   border-radius: 8px;
-  font-family: var(--font-family);
+  font-family: var(--font-sans);
   font-size: 1rem;
+  color: var(--coffee);
+  transition: all 0.2s ease;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: var(--oyster-cream);
+  box-shadow: 0 0 0 3px var(--lemon);
 }
 
 .category-filters {
@@ -57,90 +93,150 @@
 
 .category-filter {
   padding: 8px 16px;
-  border-radius: 20px;
-  border: none;
-  background-color: var(--oyster-cream);
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background-color:  #ffdbdb;
   color: var(--medieval-blue);
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+}
+
+.category-filter:hover {
+  background-color: var(--ivory);
+  color: var(--medieval-blue);
 }
 
 .category-filter.active {
-  background-color: var(--medieval-blue);
-  color: var(--white);
+  color: var(--medieval-blue);
+  background-color: var(--lemon);
+  border-color: var(--diff-green);
+  font-weight: 600;
 }
 
-/* Tips Grid */
+/* --- NEW: TIPS GRID (2-Column Layout) --- */
 .tips-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  /* Creates a responsive grid. Will be 2 columns on larger screens, 1 on smaller */
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 2rem;
 }
 
 .tip-card {
-  background-color: var(--white);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--light-lavender);
-  transition: transform 0.2s ease;
+  display: flex;
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  position: relative;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
 }
 
 .tip-card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
   transform: translateY(-4px);
 }
 
-.tip-category {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
-  background-color: var(--oyster-cream);
-  color: var(--medieval-blue);
+.entry-bookmark {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  width: 10px;
+  height: 100%;
+  border-right: 1px solid var(--border-color);
 }
 
-.tip-title {
-  font-size: 1.25rem;
+.entry-main {
+  flex: 2;
+  padding: 1.5rem 1.5rem 1.5rem 3.5rem; /* Padding for bookmark */
+}
+
+.entry-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
   color: var(--medieval-blue);
 }
 
-.tip-description {
+.entry-description {
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--light-gray);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+}
+
+.entry-sidebar {
+  flex: 1;
+  padding: 1.5rem;
+  border-left: 1px solid var(--border-color);
+  background: var(--light-lavender);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.entry-category-tag {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--medieval-blue);
+  display: flex;
+  align-items: center;
+}
+
+.category-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  display: inline-block;
 }
 
 .quick-tip {
-  padding: 0.75rem;
+  padding: 1rem;
   background-color: var(--lemon);
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--medieval-blue);
 }
 
 .quick-tip strong {
-  margin-right: 0.5rem;
+  font-weight: 500;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .tips-header h1 {
-    font-size: 2rem;
-  }
-  
-  .tips-controls {
+/* Category Specific Colors for Bookmarks & Dots */
+.eye-health { background-color: var(--light-blue); }
+.posture { background-color: var(--lavender); }
+.sleep { background-color: var(--oyster-cream); }
+.mental-wellness { background-color: var(--coral); }
+.focus { background-color: var(--mint-green); }
+.physical-health { background-color: var(--diff-green); }
+
+.no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--light-gray);
+    grid-column: 1 / -1; /* Makes it span the full grid width */
+}
+.no-results h3 {
+    font-family: var(--font-serif);
+    color: var(--medieval-blue);
+    font-size: 1.5rem;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
+  /* On smaller tablets and below, the card's inner layout stacks */
+  .tip-card {
     flex-direction: column;
   }
-  
-  .search-bar {
-    width: 100%;
-  }
-  
-  .category-filters {
-    justify-content: center;
+  .entry-sidebar {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    border-radius: 0 0 8px 8px;
   }
 }

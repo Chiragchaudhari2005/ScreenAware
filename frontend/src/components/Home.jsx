@@ -147,7 +147,7 @@ const Home = ({ onNavigate }) => {
             <p>Consistency is key to understanding your habits.</p>
             <div className="input-group">
               <label htmlFor="sleep-hours">How many hours did you sleep?</label>
-              <input id="sleep-hours" type="number" step="0.5" placeholder="e.g., 7.5" />
+              <p className='example-hours'>Example : 7 hours</p>
             </div>
             <button className="btn-v2 btn-log-data" onClick={() => onNavigate && onNavigate('dataform')}>Log Data</button>
           </div>

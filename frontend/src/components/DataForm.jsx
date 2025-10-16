@@ -191,7 +191,7 @@ const DataForm = ({ onNavigate }) => {
         </div>
 
         <h4 className="section-title">Screen time breakdown (hours)</h4>
-        <p className="muted" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
+        <p className="muted" style={{ fontSize: '0.9rem' }}>
           Total from categories: {totalCategoryHours.toFixed(1)} hours
           {timeMismatch && (
             <span style={{ color: '#ff4444', marginLeft: '0.5rem' }}>

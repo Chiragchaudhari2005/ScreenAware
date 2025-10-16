@@ -5,7 +5,7 @@
 
 /* Assuming :root variables from LandingPage.css are available globally */
 .dashboard-page-root {
-  background-color: var(--ivory);
+  background-color: var(--lavender);
   min-height: 100vh;
   font-family: var(--font-family);
   color: var(--medieval-blue);
@@ -126,7 +126,7 @@
   font-weight: 600;
 }
 .stat-info span {
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
@@ -154,9 +154,9 @@
 }
 .input-group label {
     display: block;
-    font-weight: 600;
+    font-weight: 650;
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 .input-group input {
     width: 100%;
@@ -167,12 +167,23 @@
     font-size: 1rem;
     box-sizing: border-box;
 }
+
+.example-hours{
+  padding-top: 5%;
+}
 .btn-log-data {
     width: 100%;
     background-color: var(--oyster-cream);
     color: var(--medieval-blue);
     padding: 12px;
     margin-top: 0.5rem;
+}
+
+
+.btn-log-data:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-color: var(--coral);
 }
 
 /* --- Responsive Design --- */

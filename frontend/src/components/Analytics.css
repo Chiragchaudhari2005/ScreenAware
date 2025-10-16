@@ -1,6 +1,6 @@
 .analytics-dashboard {
-  padding: 2rem;
-  background: var(--ivory, #F8F7FB);
+  padding: 8rem;
+  background: #d6e4bd;
   min-height: 100vh;
 }
 
@@ -9,10 +9,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  margin-top: -5rem;
 }
 
 .dashboard-header h1 {
-  margin: 0;
+  margin: 0%;
   color: var(--dark-purple, #2E2E48);
 }
 
