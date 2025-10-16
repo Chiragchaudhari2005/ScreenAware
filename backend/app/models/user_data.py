@@ -3,9 +3,14 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 from pymongo import MongoClient
 from bson import ObjectId
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # MongoDB connection
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = os.getenv("MONGODB_URI")
 client = MongoClient(MONGO_URI)
 db = client.screenaware_db
 
