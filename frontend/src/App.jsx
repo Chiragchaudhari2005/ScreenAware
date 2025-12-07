@@ -8,6 +8,7 @@ import DataForm from './components/DataForm';
 import Report from './components/Report';
 import TipsPage from './components/TipsPage';
 import AnalyticsDashboard from './components/Analytics';
+import MemoryGame from './components/MemoryGame';
 import Navigation from './components/Navigation';
 import './App.css';
 import axios from "axios";
@@ -44,6 +45,7 @@ function App() {
     if (p === 'dashboard') return 'dashboard';
     if (p === 'tips') return 'tips';
     if (p === 'analytics') return 'analytics';
+    if (p === 'games') return 'games';
     return 'landing';
   };
 
@@ -54,6 +56,7 @@ function App() {
     if (r === 'dashboard') return '/dashboard';
     if (r === 'tips') return '/tips';
     if (r === 'analytics') return '/analytics';
+    if (r === 'games') return '/games';
     return '/';
   };
 
@@ -118,6 +121,8 @@ function App() {
         <TipsPage onNavigate={navigate} />
       ) : route === 'analytics' ? (
         <AnalyticsDashboard onNavigate={navigate} />
+      ) : route === 'games' ? (
+        <MemoryGame onNavigate={navigate} />
       ) : (
         <div className="login-container">
           <div className="animation-container">

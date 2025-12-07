@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './DataForm.css';
 import axios from 'axios';
+import { auth } from '../firebase';
 
 const emojiScale = ['😢','😕','😐','🙂','😄'];
 
@@ -39,8 +40,17 @@ const DataForm = ({ onNavigate }) => {
         return;
       }
 
+      // Get current user
+      const user = auth.currentUser;
+      if (!user) {
+        alert('Please log in first.');
+        setLoading(false);
+        return;
+      }
+
       // Prepare payload - ensure all fields are numbers
       const payload = {
+        user_id: user.uid,
         daily_screen_time_hours: parseFloat(form.daily_screen_time_hours) || 0,
         sleep_duration_hours: parseFloat(form.sleep_duration_hours) || 0,
         stress_level: parseFloat(form.stress_level) || 3,
@@ -52,23 +62,34 @@ const DataForm = ({ onNavigate }) => {
         work_related_hours: parseFloat(form.work_related_hours) || 0
       };
 
-      console.log('Sending payload:', payload); // Debug log
+      console.log('Sending payload:', payload);
 
-      const res = await axios.post('http://localhost:8000/predict_report', payload);
-      const backendData = res.data;
+      // Get predictions from ML endpoint
+      const predictRes = await axios.post('http://localhost:8000/predict_report', payload);
+      const predictions = predictRes.data;
 
-      console.log('Backend response:', backendData); // Debug log
+      // Combine predictions with user data
+      const userDataPayload = {
+        ...payload,
+        ...predictions
+      };
 
-      // Map backend response to frontend expected format
+      // Store in MongoDB through the new endpoint
+      const storeRes = await axios.post('http://localhost:8000/api/user-data', userDataPayload);
+      const storedData = storeRes.data;
+
+      console.log('Stored data:', storedData);
+
+      // Map response to frontend expected format
       const report = {
-        risk_level: backendData.risk_level || 'Unknown',
-        mood_rating: backendData.mood_rating || 0,
-        dominant_category: backendData.dominant_category || 'Unknown',
-        cluster_label: backendData.cluster_label || 'Unknown',
+        risk_level: predictions.risk_level || 'Unknown',
+        mood_rating: predictions.mood_rating || 0,
+        dominant_category: predictions.dominant_category || 'Unknown',
+        cluster_label: predictions.cluster_label || 'Unknown',
         raw: form
       };
 
-      console.log('Final report:', report); // Debug log
+      console.log('Final report:', report);
 
       // Store and navigate
       window.history.pushState({ route: 'report', report }, '', '/report');
@@ -170,7 +191,7 @@ const DataForm = ({ onNavigate }) => {
         </div>
 
         <h4 className="section-title">Screen time breakdown (hours)</h4>
-        <p className="muted" style={{ fontSize: '0.9rem', marginBottom: '1rem' }}>
+        <p className="muted" style={{ fontSize: '0.9rem' }}>
           Total from categories: {totalCategoryHours.toFixed(1)} hours
           {timeMismatch && (
             <span style={{ color: '#ff4444', marginLeft: '0.5rem' }}>

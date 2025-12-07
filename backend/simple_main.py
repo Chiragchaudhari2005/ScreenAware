@@ -66,3 +66,50 @@ def predict_report(user: UserInput):
     
     print(f"Sending response: {response}")
     return response
+
+@app.get("/api/analytics/overview/{user_id}")
+def get_analytics_overview(user_id: str):
+    """Get analytics overview for a user"""
+    # Mock data - replace with actual database queries
+    return {
+        "totalScreenTime": 32.5,
+        "averageDaily": 4.6,
+        "weeklyTrend": "+12%",
+        "riskLevel": "Medium",
+        "moodTrend": 3.2,
+        "activeGoals": 2,
+        "streakDays": 5
+    }
+
+@app.get("/api/analytics/detailed/{user_id}")
+def get_analytics_detailed(user_id: str):
+    """Get detailed analytics for a user"""
+    # Mock data - replace with actual database queries
+    return {
+        "weeklyData": [
+            {"day": "Mon", "screenTime": 4.5, "mood": 3, "sleep": 7},
+            {"day": "Tue", "screenTime": 5.2, "mood": 2, "sleep": 6.5},
+            {"day": "Wed", "screenTime": 3.8, "mood": 4, "sleep": 8},
+            {"day": "Thu", "screenTime": 6.1, "mood": 2, "sleep": 6},
+            {"day": "Fri", "screenTime": 4.2, "mood": 4, "sleep": 7.5},
+            {"day": "Sat", "screenTime": 7.0, "mood": 3, "sleep": 8},
+            {"day": "Sun", "screenTime": 3.5, "mood": 5, "sleep": 9}
+        ],
+        "categoryBreakdown": {
+            "social_media": 2.1,
+            "gaming": 1.5,
+            "entertainment": 1.8,
+            "work": 0.8
+        },
+        "insights": [
+            "Your screen time increased by 15% this week",
+            "Best mood was on Sunday with 9 hours of sleep",
+            "Social media usage is your dominant category"
+        ]
+    }
+
+@app.post("/api/user-data")
+def store_user_data(data: dict):
+    """Store user data - currently just returns success"""
+    print(f"Storing user data: {data}")
+    return {"status": "success", "message": "Data stored successfully"}

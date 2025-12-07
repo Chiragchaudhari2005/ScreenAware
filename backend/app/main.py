@@ -74,6 +74,10 @@ app = FastAPI(
     version="1.0"
 )
 
+# Include analytics router
+from .routers import analytics
+app.include_router(analytics.router, prefix="/api", tags=["analytics"])
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
